@@ -30,4 +30,27 @@ class User < ApplicationRecord
     return "#{first_name} #{last_name}" if first_name || last_name
     "Anonymous"
   end
+
+  def self.search(param)
+    param.strip!
+    search_results = (first_name_match(param) + last_name_match(param) + email_match(param)).uniq
+    return nil unless search_results
+    search_results
+  end
+
+  def self.first_name_match(param)
+    matches('first_name', param)
+  end
+
+  def self.last_name_match(param)
+    matches('last_name', param)
+  end
+
+  def self.email_match(param)
+    matches('email', param)
+  end
+
+  def self.matches(field_name, param)
+    where("#{field_name} like ?", "%#{param}%")
+  end
 end

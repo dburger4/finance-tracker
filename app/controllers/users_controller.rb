@@ -18,7 +18,7 @@ class UsersController < ApplicationController
         
       else
         respond_to do |format|
-          flash.now[:alert] = "Please enter a valid symbol to search"
+          flash.now[:alert] = "Couldn't find user"
           format.js { render partial: 'users/friend_result' }
         end
         
